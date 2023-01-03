@@ -1,6 +1,6 @@
 package org.jonathan.blogPessoal.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,53 +8,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 
-@Entity
-@Table(name = "postagem")
+@Entity //transforma em tabela 
+@Table(name="tb_postagens") //nomeia a tabela
 public class Postagem {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Id //informa que é um ID
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //auto increment
+	private Long id; //long igual ao int 
 	
-	@NotNull
+	@Size(min=4, max=50) // define um tamanho max e min de caracteres pro campo de texto
+	private String texto; 
+	
+//pode passar varias notacoes como o not null
+	
+	@NotNull // seguir no banco dados a mesma forma que esta aqui 
 	private String titulo;
 	
-	
-	@NotNull
-	private String texto;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date data = new java.sql.Date(System.currentTimeMillis());
 
-	@ManyToOne
-	@JsonIgnoreProperties("postagem")
-	private Tema tema;
+	
+	
+	@UpdateTimestamp //formatar de acordo com a data do computador
+	private LocalDateTime data;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
-	private Usuario usuario;
-	
-	
-	public Tema getTema() {
-		return tema;
-	}
+    @JsonIgnoreProperties("postagem")
+    private Tema tema;
 
-	public void setTema(Tema tema) {
-		this.tema = tema;
-	}
+    @ManyToOne
+    @JsonIgnoreProperties("postagem")
+    private Usuario usuario;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -74,15 +70,13 @@ public class Postagem {
 		this.texto = texto;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setDate(Date date) {
-		this.data = date;
+	public void setData(LocalDateTime data) {
+		this.data = data;
 	}
 	
 	
-	
-
 }

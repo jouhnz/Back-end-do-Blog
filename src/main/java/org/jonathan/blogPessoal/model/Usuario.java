@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name="tb_usuarios")
 
 public class Usuario {
 	@Id 
@@ -46,11 +46,11 @@ public class Usuario {
 	private List<Postagem> postagem;
 	
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
